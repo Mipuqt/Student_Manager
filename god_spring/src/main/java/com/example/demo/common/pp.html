@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    #su{
+        display: none;
+    }
+    #cl{
+        display: none;
+    }
+</style>
+<body>
+<div >
+<span>输入7门成绩</span>
+<br>
+<span id="showClass">请输入第1门成绩</span><input id="test" type="name">
+<br>
+<br>
+    <button id="bu" value="添加" onclick="add()">添加</button>
+    <button id="su" value="添加" onclick="get()">计算平均值</button>
+    <button id="cl"  value="添加" onclick="clear1()">重新计算</button>
+    <br>
+    <br>
+    <span id="resoult"></span>
+</div>
+</body>
+<script>
+    let arrayObj = new Array();
+
+function  get() {
+    document.getElementById("cl").style.display="block";
+    s=sum(arrayObj)
+    e=eva(arrayObj)
+    console.log("总分"+sum(arrayObj))
+    console.log("平均分"+eva(arrayObj))
+    document.getElementById("resoult").innerText="总分:"+s+ "\n平均分:"+e;
+    arrayObj=[]
+
+}
+function  clear1() {
+        document.getElementById("showClass").innerText="请输入第1门成绩";
+        document.getElementById("test").style.display="block";
+        document.getElementById("bu").style.display="block";
+        document.getElementById("su").style.display="none";
+    document.getElementById("cl").style.display="none";
+    document.getElementById("resoult").innerText="";
+        arrayObj=[]
+
+    }
+function  add() {
+    var data=document.getElementById("test").value;
+    arrayObj.push(parseInt(data))
+    document.getElementById("test").value="";
+
+    if (arrayObj.length==7){
+        document.getElementById("su").style.display="block";
+        document.getElementById("bu").style.display="none";
+        document.getElementById("showClass").innerText="成绩输入完毕清计算";
+        document.getElementById("test").style.display="none";
+
+    }else {
+        document.getElementById("test").focus();
+        var cc=gettext(arrayObj.length)
+        document.getElementById("bu").innerText="添加";
+        document.getElementById("showClass").innerText=cc;
+    }
+}
+
+function gettext(index) {
+    var c1="请输入第"
+    var c2="门成绩"
+    return c1+(index+1)+c2
+
+
+}
+function sum(arr) {
+    var s = 0;
+    for (var i=arr.length-1; i>=0; i--) {
+        s += arr[i];
+    }
+    return s;
+}
+function eva(arr) {
+    var len = arr.length;
+    var sum = 0;
+    for(var i = 0;i<len;i++){
+        sum +=arrayObj[i];
+    }
+    return sum/len;
+    }
+
+</script>
+
+</html>

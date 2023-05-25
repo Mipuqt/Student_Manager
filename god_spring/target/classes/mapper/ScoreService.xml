@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.ScoreMapper">
+    <insert id="InsertScore">
+        insert  into score(score,type,stuid,stype) values(#{score},#{type},#{stuid},#{stype}) ;
+    </insert>
+    <update id="editScore">
+        update score set    stuid = #{stuid},
+                           type = #{type},
+                           score = #{score},
+                           stype=#{stype}
+        where sid = #{sid}
+    </update>
+    <delete id="delScore">
+        delete  from score where sid= #{sid};
+    </delete>
+    <delete id="DelEX">
+        delete  from score where stype= #{stype} ;
+    </delete>
+
+    <select id="getAll" resultType="java.util.Map">
+        select sid,name,stype,cname,classroom,score,stuid from score s LEFT JOIN student st on s.stuid=st.id LEFT JOIN Classn c on s.type=c.cid
+    </select>
+    <select id="getScore" resultType="java.util.Map">
+        select sid,name,stype,cname,classroom,score,stuid from score s LEFT JOIN student st on s.stuid=st.id LEFT JOIN Classn c on s.type=c.cid where st.id=#{id}
+    </select>
+    <select id="search" resultType="java.util.Map">
+        select sid,name,stype,cname,classroom,score,stuid from score s LEFT JOIN student st on s.stuid=st.id LEFT JOIN Classn c on s.type=c.cid where sid != " "
+        <if test="classroom !=null ">
+         and classroom=#{classroom}
+        </if>
+        <if test="stype !=null">
+            and stype = #{stype}
+        </if>
+
+    </select>
+
+    <select id="getex" resultType="java.util.Map">
+        select DISTINCT stype FROM score
+    </select>
+    <select id="getexinfo" resultType="java.util.Map">
+        select stype,COUNT(stype) as count FROM score GROUP BY stype ORDER BY count desc
+    </select>
+</mapper>
